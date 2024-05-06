@@ -1,0 +1,81 @@
+.responsive-image {
+    height: 100%;
+    width: 100%;
+}
+.special-requests-text-area {
+    width: 100%;
+}
+
+@media screen and (min-width: 600px) {
+    .responsive-image {
+        width: 70%;
+    }
+    .special-requests-text-area {
+        width: 50%;
+    }
+}
+
+@media screen and (min-width: 900px) {
+    .responsive-image {
+        width: 50%;
+    }
+    .special-requests-text-area {
+        width: 33%;
+    }
+}
+/* Custom styles for Yes/No radio buttons */
+.v-radio-group-yesno .v-radio-button {
+    --vaadin-input-field-label-font-size: --lumo-font-size-l;
+    --vaadin-radio-button-size: 15px;
+    --vaadin-radio-button-dot-size: 15px;
+    --vaadin-radio-button-label-font-size: 15px;
+}
+
+.v-radio-group-yesno .v-radio-button.v-checked {
+    background-color: #4CAF50; /* Green background */
+}
+
+.v-radio-group-yesno .v-radio-button.v-checked::after {
+    content: '\2713'; /* Checkmark symbol */
+    color: white;
+    font-size: 50px;
+    position: absolute;
+    top: 5px;
+    left: 8px;
+}
+
+.footer {
+    background-color: #f0f0f0; /* Set background color */
+    padding: 10px; /* Add padding for better appearance */
+    width: 100%; /* Set width to fill the entire width of the screen */
+    position: fixed; /* Position the footer at the bottom of the screen */
+    bottom: 0; /* Align the footer to the bottom */
+    text-align: center; /* Center align text within the footer */
+    margin-top: 20px; /* Add margin to the top of the footer */
+    font-size: 14px; /* Set font size */
+    color: #666; /* Set text color */
+}
+.header {
+    background-color: #f0f0f0; /* Set background color */
+    padding: 10px; /* Add padding for better appearance */
+    width: 100%; /* Set width to fill the entire width of the screen */
+    position: fixed; /* Position the footer at the bottom of the screen */
+    top: 0; /* Align the footer to the bottom */
+    text-align: center; /* Center align text within the header */
+    margin-bottom: 20px; /* Add margin to the bottom of the header */
+    font-size: 14px; /* Set font size */
+    color: #666; /* Set text color */
+}
+.scrollable-layout {
+    overflow: auto;
+}
+.couple-text-padding {
+    padding: 20px; /* Adjust this value as needed */
+}
+.submit-button {
+    padding: 20px; /* Adjust this value as needed */
+}
+.thank-you-view {
+    padding: 20px; /* Adjust this value as needed */
+    vertical-align: middle;
+}
