@@ -4,6 +4,7 @@
 }
 .special-requests-text-area {
     width: 100%;
+    margin-bottom: 10px;
 }
 
 @media screen and (min-width: 600px) {
@@ -51,7 +52,7 @@
     position: fixed; /* Position the footer at the bottom of the screen */
     bottom: 0; /* Align the footer to the bottom */
     text-align: center; /* Center align text within the footer */
-    margin-top: 20px; /* Add margin to the top of the footer */
+    margin-top: 10px; /* Add margin to the top of the footer */
     font-size: 14px; /* Set font size */
     color: #666; /* Set text color */
 }
@@ -70,12 +71,14 @@
     overflow: auto;
 }
 .couple-text-padding {
-    padding: 20px; /* Adjust this value as needed */
+    margin-top: 100px; /* Add margin to the top of the text */
+    margin-bottom: 2px; /* Add margin to the bottom of the text */
+    /*padding: 20px; !* Adjust this value as needed *!*/
 }
 .submit-button {
-    padding: 20px; /* Adjust this value as needed */
+    margin-bottom: 50px; /* Add margin to the bottom of the button */
 }
 .thank-you-view {
     padding: 20px; /* Adjust this value as needed */
-    vertical-align: middle;
+    margin-top: 100px; /* Add margin to the top of the view */
 }

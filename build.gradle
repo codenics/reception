@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'org.gk'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 
 java {
     sourceCompatibility = '17'
@@ -24,7 +24,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.vaadin:vaadin-spring-boot-starter'
-    implementation 'com.vaadin:vaadin-spring-boot-starter'
     implementation 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     annotationProcessor 'org.projectlombok:lombok'
@@ -40,4 +39,12 @@ dependencyManagement {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+vaadin {
+    pnpmEnable = true
+    requireHomeNodeExec = false
+    productionMode = true
+    vaadinBuildFrontend {
+        productionMode = true
+    }
 }

@@ -1,6 +1,5 @@
 package org.gk.reception.viewmodel;
 
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
@@ -11,15 +10,20 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
+import com.vaadin.flow.server.VaadinRequest;
+import com.vaadin.flow.server.VaadinService;
 import org.gk.reception.model.Dinner;
 import org.gk.reception.repository.DinnerRepository;
 import org.gk.reception.view.Footer;
 import org.gk.reception.view.Header;
 import org.gk.reception.view.SelectFoodView;
 import org.gk.reception.view.ThankYouView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 
@@ -30,7 +34,9 @@ import java.time.LocalDateTime;
 @CssImport("resources/static/styles.css")
 public class MainViewModel extends Div {
     // add logging to entire codebase
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MainViewModel.class);
+    private static final Logger log = LoggerFactory.getLogger(MainViewModel.class);
+    private final Binder<Dinner> binder = new Binder<>(Dinner.class);
+
     private final DinnerRepository dinnerRepository;
     H1 coupleText = new H1("Gilbert & Kira Joy");
     H3 rsvpDinnerSelectionText = new H3("Please RSVP & Select Main Course");
@@ -61,6 +67,8 @@ public class MainViewModel extends Div {
     }
 
     void initComponents() {
+        userDetails();
+        validateFields();
         yesNoRadio.setItems("Yes", "No");
         yesNoRadio.setValue("No");
         yesNoRadio.addClassName("v-radio-group-yesno");
@@ -81,6 +89,7 @@ public class MainViewModel extends Div {
 
     public void handleSubmit() {
         // save the RSVP details to the database
+        if (binder.validate().isOk()) {
         dinnerRepository.save(Dinner.builder()
                 .firstName(firstNameField.getValue())
                 .city(cityField.getValue())
@@ -95,14 +104,27 @@ public class MainViewModel extends Div {
                 + selectFoodView.getSpecialRequests() + " " + LocalDateTime.now());
         remove(pageContent);
         add(thankYouView);
+            thankYouView.setAlignItems(FlexComponent.Alignment.CENTER);
         log.info("Thank you message displayed");
+        } else {
+            log.info(String.format("RSVP not submitted due to validation errors, FirstName:%s City:%s ", firstNameField.getValue(), cityField.getValue()));
+        }
+    }
 
-        // create an animation with vaadin to simulate a delay
-        thankYouView.backToMain.addClickListener(event -> {
-            remove(thankYouView);
-            add(pageContent);
-            log.info("Back to main button clicked");
-        });
+    void userDetails() {
+        log.info(String.format("New Visitor %s", LocalDateTime.now()));
+        VaadinRequest vaadinRequest = VaadinService.getCurrentRequest();
+        log.info("Request: " + vaadinRequest.getRemoteAddr() + " " + vaadinRequest.getHeader("User-Agent") + " " + vaadinRequest.getLocale());
+    }
+
+    void validateFields() {
+        binder.forField(firstNameField)
+                .withValidator(name -> name.matches("^[A-Z][a-zA-Z]{1,}$"), "First name must start with a capital letter and consist only of alphabets")
+                .bind(Dinner::getFirstName, Dinner::setFirstName);
+
+        binder.forField(cityField)
+                .withValidator(city -> city.matches("^[A-Z][a-zA-Z]{1,}$"), "First name must start with a capital letter and consist only of alphabets")
+                .bind(Dinner::getCity, Dinner::setCity);
     }
 }
 

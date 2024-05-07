@@ -4,10 +4,8 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
-import org.gk.reception.model.Dinner;
 
 public class SelectFoodView extends VerticalLayout {
-    Button allFoodsButton = new Button("All");
     Button filetButton = new Button("Beef Filet");
     Button octopusButton = new Button("Octopus");
     Button eggPlantButton = new Button("Egg Plant");
@@ -23,15 +21,9 @@ public class SelectFoodView extends VerticalLayout {
 
     public SelectFoodView() {
         initFoods();
-        foodButtonsHlayout.add(allFoodsButton, filetButton, octopusButton, eggPlantButton);
-        foodViewsHlayout.add(filetView, octopusView, eggPlantView);
+        foodButtonsHlayout.add(filetButton, octopusButton, eggPlantButton);
+        foodViewsHlayout.add(filetView);
         foodButtonsAndFoodSpecialNotesVLayout.add(foodButtonsHlayout, foodViewsHlayout, specialRequestsTextArea);
-
-        allFoodsButton.addClickListener(event -> {
-            foodViewsHlayout.removeAll();
-            foodViewsHlayout.add(filetView, octopusView, eggPlantView);
-            add(specialRequestsTextArea);
-        });
         eggPlantButton.addClickListener(event -> {
             foodViewsHlayout.removeAll();
             foodViewsHlayout.add(eggPlantView);
@@ -85,7 +77,6 @@ public class SelectFoodView extends VerticalLayout {
     }
 
     void initFoods(){
-
         filetView.orderButton.addClickListener(event -> {
             deselectOthers();
             filetView.handleOrderButtonClick();
@@ -105,29 +96,31 @@ public class SelectFoodView extends VerticalLayout {
         specialRequestsTextArea.setClassName("special-requests-text-area", true);
 
         filetView.mainNameText.setText("FILETTO DI MANZO");
-        filetView.secondaryNameText.setText("BEEF FILET | MUSHROOMS | BLACK PEPPER SAUCE | MASHED POTATOES");
-        filetView.foodImage.setSrc("images/fillet.jpeg");
-        filetView.descriptionText.setText("The beef filet, or filet mignon, epitomizes culinary refinement. " +
-                "This exquisite cut, sourced from the tenderloin, boasts unparalleled tenderness and marbling. " +
-                "When expertly prepared, its velvety texture and succulent flavor evoke gastronomic ecstasy." +
-                "Whether adorned with a luscious sauce or simply seasoned, the beef filet remains an epitome of indulgence and sophistication.");
+        filetView.secondaryNameTextHtml.setHtmlContent("<div style=\"width: 350px; word-wrap: break-word; padding: 5px;\"> " +
+                "BEEF FILET | MUSHROOMS | BLACK PEPPER SAUCE | MASHED POTATOES</div>");
+        filetView.foodImage.setSrc("images/beef_fillet.jpg");
+        filetView.descriptionText.setHtmlContent("<div style=\"width: 350px; word-wrap: break-word; padding: 5px; border-radius: 10px; background-color: #f8f9fa; font-family: Arial, sans-serif; line-height: 1.6; margin: 5px;\">" +
+                "Filet mignon epitomizes culinary refinement. " +
+                "This exquisite cut, sourced from the tenderloin, boasts unparalleled tenderness and marbling." +
+                "When expertly prepared, its velvety texture and succulent flavor evoke gastronomic ecstasy. " +
+                "Whether adorned with a luscious sauce or simply seasoned, the beef filet remains an epitome of indulgence and sophistication. </div>");
 
         octopusView.mainNameText.setText("POLPO ARROSTO CON CREMA DI CECI");
-        octopusView.secondaryNameText.setText("Gegrillter Oktopus | Chili | Petersilie | Oliven Öl | Kichererbsenpüree | Tomaten Confit");
-        octopusView.foodImage.setSrc("images/octopus.jpeg");
-        octopusView.descriptionText.setText("""
-                The octopus, a creature of the sea, is a culinary marvel.\s
-                 Its tender, succulent flesh, when grilled to perfection, offers a delightful contrast of textures.\s
-                 The octopus' subtle brininess harmonizes with the piquant chili and aromatic parsley. \n\s
-                 The creamy chickpea puree and sweet tomato confit provide a luscious backdrop for this exquisite dish.""");
-
+        octopusView.secondaryNameTextHtml.setHtmlContent(String.format("<div style=\"width: 350px; word-wrap: break-word; padding: 5px;\">%s</div>", "Gegrillter Oktopus | Chili | Petersilie | Oliven Öl | Kichererbsenpüree | Tomaten Confit".toUpperCase()));
+        octopusView.foodImage.setSrc("images/octopus.jpg");
+        octopusView.descriptionText.setHtmlContent("<div style=\"width: 350px; word-wrap: break-word; padding: 5px; " +
+                "border-radius: 10px; background-color: #f8f9fa; font-family: Arial, sans-serif; line-height: 1.6; margin: 5px;\"> " +
+                "Octopus' tender, succulent flesh, when grilled to perfection, offers a delightful contrast of textures. " +
+                "The octopus' subtle brininess harmonizes with the piquant chili and aromatic parsley. " +
+                "Finally the accompanied creamy chickpea puree and sweet tomato confit provide a luscious backdrop for this exquisite dish.</div>");
         eggPlantView.mainNameText.setText("MELANZANE ALLA PARMIGIANA");
-        eggPlantView.secondaryNameText.setText("EGGPLANT | SAN MARZANO TOMATOES | PARMIGIANO REGGIANO | FIOR DI LATTE");
-        eggPlantView.foodImage.setSrc("images/chef.jpeg");
-        eggPlantView.descriptionText.setText("""
-                The eggplant, a versatile vegetable, is the star of this classic Italian dish.\s
-                Layered with tangy San Marzano tomatoes, nutty Parmigiano Reggiano, and creamy fior di latte, 
-                the eggplant casserole is a symphony of flavors and textures.\s
-                Whether served as a side or a main course, this dish is sure to delight the palate.""");
+        eggPlantView.secondaryNameTextHtml.setHtmlContent("<div style=\"width: 350px; word-wrap: break-word; padding: 5px;\">EGGPLANT | SAN MARZANO TOMATOES | PARMIGIANO REGGIANO | FIOR DI LATTE</div>");
+        eggPlantView.foodImage.setSrc("images/eggplant.jpg");
+        eggPlantView.descriptionText.setHtmlContent("<div style=\"width: 350px; word-wrap: break-word; padding: 5px; border-radius: 10px; background-color: #f8f9fa; font-family: Arial, line-height: 1.6; margin: 5px;\">" +
+                "The eggplant, a versatile vegetable, is the star of this classic Italian dish. " +
+                "Layered with tangy San Marzano tomatoes, nutty Parmigiano Reggiano, and creamy fior di latte; " +
+                "the eggplant casserole is a symphony of flavors and textures. " +
+                "Whether served as a main course, this dish is sure to delight the palate and even make the most ardent carnivore a convert 😉." +
+                "</div>");
     }
 }

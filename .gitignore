@@ -37,37 +37,7 @@ out/
 ### VS Code ###
 .vscode/
 
-# Package Files #
-*.jar
-*.war
-*.ear
-
-
-# Node modules and bower components
-node_modules/
-bower_components/
-
-# JetBrains IDE
-.idea/
-
-
-# OS-specific files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Vaadin specific
-*.gwt.xml
-.gwt
-gwt-unitCache/
-.vaadin/
-# Work directory for the application when running in embedded jetty
-work/
-# Chrome debug logs
-chromedebug.log
-
-frontend/generated/
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
