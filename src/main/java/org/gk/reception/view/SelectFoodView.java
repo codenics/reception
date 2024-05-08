@@ -1,14 +1,17 @@
 package org.gk.reception.view;
 
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextArea;
 
 public class SelectFoodView extends VerticalLayout {
-    Button filetButton = new Button("Beef Filet");
-    Button octopusButton = new Button("Octopus");
-    Button eggPlantButton = new Button("Egg Plant");
+    Tabs tabs = new Tabs();
+    Tab filetTab = new Tab("Beef Filet");
+    Tab octopusTab = new Tab("Octopus");
+    Tab eggPlantTab = new Tab("Egg Plant");
+
 
     OneFoodView filetView = new OneFoodView();
     OneFoodView octopusView = new OneFoodView();
@@ -21,24 +24,26 @@ public class SelectFoodView extends VerticalLayout {
 
     public SelectFoodView() {
         initFoods();
-        foodButtonsHlayout.add(filetButton, octopusButton, eggPlantButton);
+        tabs.add(filetTab, octopusTab, eggPlantTab);
+
+        tabs.addSelectedChangeListener(event -> {
+            // Remove all components from the foodViewsHlayout
+            foodViewsHlayout.removeAll();
+
+            // Check which tab was selected and update the foodViewsHlayout accordingly
+            Tab selectedTab = tabs.getSelectedTab();
+            if (selectedTab.equals(filetTab)) {
+                foodViewsHlayout.add(filetView);
+            } else if (selectedTab.equals(octopusTab)) {
+                foodViewsHlayout.add(octopusView);
+            } else if (selectedTab.equals(eggPlantTab)) {
+                foodViewsHlayout.add(eggPlantView);
+            }
+        });
+
         foodViewsHlayout.add(filetView);
         foodButtonsAndFoodSpecialNotesVLayout.add(foodButtonsHlayout, foodViewsHlayout, specialRequestsTextArea);
-        eggPlantButton.addClickListener(event -> {
-            foodViewsHlayout.removeAll();
-            foodViewsHlayout.add(eggPlantView);
-            add(specialRequestsTextArea);
-        });
-        filetButton.addClickListener(event -> {
-            foodViewsHlayout.removeAll();
-            foodViewsHlayout.add(filetView);
-            add(specialRequestsTextArea);
-        });
-        octopusButton.addClickListener(event -> {
-            foodViewsHlayout.removeAll();
-            foodViewsHlayout.add(octopusView);
-            add(specialRequestsTextArea);
-        });
+        foodButtonsAndFoodSpecialNotesVLayout.replace(foodButtonsHlayout, tabs);
         add(foodButtonsAndFoodSpecialNotesVLayout);
         foodButtonsAndFoodSpecialNotesVLayout.setAlignItems(Alignment.CENTER);
         foodButtonsAndFoodSpecialNotesVLayout.setJustifyContentMode(JustifyContentMode.CENTER);
